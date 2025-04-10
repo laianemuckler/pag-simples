@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"pag-simples/internal/transfer"
 
@@ -23,8 +24,8 @@ func NewTransferHandler(transferService transfer.TransferUsecase) *TransferHandl
 func (h *TransferHandler) Transfer(w http.ResponseWriter, r *http.Request) {
 	var transferRequest struct {
 		Value decimal.Decimal `json:"value"`
-		Payer int     `json:"payer"`
-		Payee int     `json:"payee"`
+		Payer int             `json:"payer"`
+		Payee int             `json:"payee"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&transferRequest); err != nil {
@@ -34,6 +35,11 @@ func (h *TransferHandler) Transfer(w http.ResponseWriter, r *http.Request) {
 
 	err := h.transferService.Transfer(transferRequest.Value, transferRequest.Payer, transferRequest.Payee)
 	if err != nil {
+		if strings.Contains(err.Error(), "falha na autorização") {
+			http.Error(w, "Você não tem permissão para realizar essa ação.", http.StatusForbidden)
+			return
+		}
+
 		http.Error(w, fmt.Sprintf("Erro ao realizar a transferência: %v", err), http.StatusInternalServerError)
 		return
 	}
