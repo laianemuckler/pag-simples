@@ -113,15 +113,8 @@ curl -X POST http://localhost:8080/transfer \
 }'
 ```
 
-#### Resposta (sucesso)
-
-Você pode realizar uma transferência usando o `curl` com o seguinte comando:
+#### Resposta (sucesso) - 200 OK
 
 ```bash
-curl -X POST http://localhost:8080/transfer \
--H "Content-Type: application/json" \
--d '{
-  "value": 100.0,
-  "payer": 4,
-  "payee": 15
-}'
+Transferência realizada com sucesso
+```
