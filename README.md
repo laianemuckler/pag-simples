@@ -118,3 +118,12 @@ curl -X POST http://localhost:8080/transfer \
 ```bash
 Transferência realizada com sucesso
 ```
+
+## Melhorias
+- Adicionar a conexão com banco de dados relacionais
+- Adicionar um arquivo de variáveis de  ambiente e uma `config`
+- Adicionar testes unitários em todas as camadas e aumentar a cobertura
+- Adicionar uma função de error handling para fazer uso do status HTTP adequado para todas as respostas
+- Adicionar Actions que permitem rodar todos os testes e fazer deploy para dev
+- Adicionar instrumentação para melhoria da Observabilidade
+- Implementação de uma fila de mensageria para envio de notificações
